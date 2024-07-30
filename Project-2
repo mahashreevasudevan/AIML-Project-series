@@ -1,0 +1,34 @@
+def query_admission(question):
+    responses = {
+        "what are the documents required": "The required documents are: application form, personal statement, and transcripts.",
+        "what is the application fee": "Please check the website for the current application fee.",
+        "what are the deadlines for admission": "The deadlines for admission are June 1 for fall semester and November 1 for spring semester.",
+        "goodbye": "Goodbyeee"
+    }
+ 
+    cleaned_question = ''.join(e for e in question.lower() if e.isalnum() or e.isspace())
+    return responses.get(cleaned_question, "I'm not sure about that. Please check the college website for more information.")
+
+previous_convo = []
+
+def remember_convo(interaction):
+    previous_convo.append(interaction)
+
+def recall_convo():
+    return "Here are our previous interactions: " + ", ".join(previous_convo)
+
+def admission_chat():
+    print("Welcome to the College Admission Q&A Bot. How can I assist you?")
+    while True:
+        user_input = input()
+        remember_convo(user_input)
+        if user_input.lower() == "recall":
+            print(recall_convo())
+        else:
+            response = query_admission(user_input)
+            print(response)
+        if user_input.lower() == "goodbye":
+            break
+
+
+admission_chat()
